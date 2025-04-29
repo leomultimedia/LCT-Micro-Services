@@ -1,0 +1,91 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: product-service-rules
+  namespace: monitoring
+  labels:
+    app: product-service
+    release: prometheus
+spec:
+  groups:
+  - name: product-service
+    rules:
+    - alert: HighErrorRate
+      expr: rate(product_service_errors_total[5m]) > 0.1
+      for: 5m
+      labels:
+        severity: critical
+        service: product-service
+      annotations:
+        summary: High error rate in Product Service
+        description: Product Service is experiencing a high error rate of {{ $value }} errors per second
+
+    - alert: SlowProductProcessing
+      expr: histogram_quantile(0.95, rate(product_service_product_processing_seconds_bucket[5m])) > 2
+      for: 5m
+      labels:
+        severity: warning
+        service: product-service
+      annotations:
+        summary: Slow product processing in Product Service
+        description: 95th percentile of product processing time is {{ $value }} seconds
+
+    - alert: HighProductCreationRate
+      expr: rate(product_service_products_created_total[5m]) > 10
+      for: 5m
+      labels:
+        severity: warning
+        service: product-service
+      annotations:
+        summary: High product creation rate
+        description: Product Service is creating products at a rate of {{ $value }} per second
+
+    - alert: HighProductUpdateRate
+      expr: rate(product_service_products_updated_total[5m]) > 20
+      for: 5m
+      labels:
+        severity: warning
+        service: product-service
+      annotations:
+        summary: High product update rate
+        description: Product Service is updating products at a rate of {{ $value }} per second
+
+    - alert: ProductServiceDown
+      expr: up{job="product-service"} == 0
+      for: 1m
+      labels:
+        severity: critical
+        service: product-service
+      annotations:
+        summary: Product Service is down
+        description: Product Service has been down for more than 1 minute
+
+    - alert: HighProductServiceLatency
+      expr: rate(product_service_request_duration_seconds_sum[5m]) / rate(product_service_request_duration_seconds_count[5m]) > 1
+      for: 5m
+      labels:
+        severity: warning
+        service: product-service
+      annotations:
+        summary: High latency in Product Service
+        description: Average request latency is {{ $value }} seconds
+
+    - alert: HighProductServiceMemoryUsage
+      expr: (container_memory_usage_bytes{container="product-service"} / container_spec_memory_limit_bytes{container="product-service"}) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+        service: product-service
+      annotations:
+        summary: High memory usage in Product Service
+        description: Memory usage is at {{ $value }}% of limit
+
+    - alert: HighProductServiceCPUUsage
+      expr: rate(container_cpu_usage_seconds_total{container="product-service"}[5m]) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+        service: product-service
+      annotations:
+        summary: High CPU usage in Product Service
+        description: CPU usage is at {{ $value }}% of limit 

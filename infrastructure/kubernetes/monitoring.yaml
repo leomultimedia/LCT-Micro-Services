@@ -1,0 +1,54 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ecommerce-services
+  namespace: ecommerce
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      environment: production
+  endpoints:
+  - port: metrics
+    interval: 15s
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - ecommerce
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ecommerce-alerts
+  namespace: ecommerce
+  labels:
+    release: prometheus
+spec:
+  groups:
+  - name: ecommerce
+    rules:
+    - alert: HighCPUUsage
+      expr: rate(process_cpu_seconds_total[5m]) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: High CPU usage
+        description: CPU usage is above 80% for 5 minutes
+    - alert: HighMemoryUsage
+      expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 85
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: High memory usage
+        description: Memory usage is above 85% for 5 minutes
+    - alert: ServiceDown
+      expr: up == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: Service is down
+        description: Service has been down for more than 1 minute 

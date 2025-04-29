@@ -1,0 +1,91 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: payment-service-rules
+  namespace: monitoring
+  labels:
+    app: payment-service
+    release: prometheus
+spec:
+  groups:
+  - name: payment-service
+    rules:
+    - alert: HighPaymentErrorRate
+      expr: rate(payment_service_errors_total[5m]) > 0.05
+      for: 5m
+      labels:
+        severity: critical
+        service: payment-service
+      annotations:
+        summary: High error rate in Payment Service
+        description: Payment Service is experiencing a high error rate of {{ $value }} errors per second
+
+    - alert: SlowPaymentProcessing
+      expr: histogram_quantile(0.95, rate(payment_service_payment_processing_seconds_bucket[5m])) > 3
+      for: 5m
+      labels:
+        severity: warning
+        service: payment-service
+      annotations:
+        summary: Slow payment processing in Payment Service
+        description: 95th percentile of payment processing time is {{ $value }} seconds
+
+    - alert: HighPaymentVolume
+      expr: rate(payment_service_payments_processed_total[5m]) > 50
+      for: 5m
+      labels:
+        severity: warning
+        service: payment-service
+      annotations:
+        summary: High payment volume
+        description: Payment Service is processing payments at a rate of {{ $value }} per second
+
+    - alert: HighFailedPaymentRate
+      expr: rate(payment_service_failed_payments_total[5m]) / rate(payment_service_payments_processed_total[5m]) > 0.1
+      for: 5m
+      labels:
+        severity: critical
+        service: payment-service
+      annotations:
+        summary: High failed payment rate
+        description: Failed payment rate is {{ $value }}% of total payments
+
+    - alert: PaymentServiceDown
+      expr: up{job="payment-service"} == 0
+      for: 1m
+      labels:
+        severity: critical
+        service: payment-service
+      annotations:
+        summary: Payment Service is down
+        description: Payment Service has been down for more than 1 minute
+
+    - alert: HighPaymentServiceLatency
+      expr: rate(payment_service_request_duration_seconds_sum[5m]) / rate(payment_service_request_duration_seconds_count[5m]) > 2
+      for: 5m
+      labels:
+        severity: warning
+        service: payment-service
+      annotations:
+        summary: High latency in Payment Service
+        description: Average request latency is {{ $value }} seconds
+
+    - alert: HighPaymentServiceMemoryUsage
+      expr: (container_memory_usage_bytes{container="payment-service"} / container_spec_memory_limit_bytes{container="payment-service"}) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+        service: payment-service
+      annotations:
+        summary: High memory usage in Payment Service
+        description: Memory usage is at {{ $value }}% of limit
+
+    - alert: HighPaymentServiceCPUUsage
+      expr: rate(container_cpu_usage_seconds_total{container="payment-service"}[5m]) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+        service: payment-service
+      annotations:
+        summary: High CPU usage in Payment Service
+        description: CPU usage is at {{ $value }}% of limit 

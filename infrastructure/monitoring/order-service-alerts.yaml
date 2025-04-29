@@ -1,0 +1,92 @@
+groups:
+- name: order-service
+  rules:
+  - alert: HighErrorRate
+    expr: rate(order_service_errors_total[5m]) > 0.1
+    for: 5m
+    labels:
+      severity: critical
+      service: order-service
+    annotations:
+      summary: High error rate in Order Service
+      description: Order Service is experiencing {{ $value }} errors per second
+
+  - alert: SlowOrderProcessing
+    expr: histogram_quantile(0.95, rate(order_service_order_processing_seconds_bucket[5m])) > 5
+    for: 10m
+    labels:
+      severity: warning
+      service: order-service
+    annotations:
+      summary: Slow order processing in Order Service
+      description: 95th percentile of order processing time is {{ $value }} seconds
+
+  - alert: HighOrderCreationRate
+    expr: rate(order_service_orders_created_total[5m]) > 10
+    for: 5m
+    labels:
+      severity: warning
+      service: order-service
+    annotations:
+      summary: High order creation rate in Order Service
+      description: Order Service is processing {{ $value }} orders per second
+
+  - alert: OrderStatusStuck
+    expr: rate(order_service_orders_status_changed_total{to_status="Pending"}[1h]) == 0
+    for: 1h
+    labels:
+      severity: warning
+      service: order-service
+    annotations:
+      summary: No order status changes in the last hour
+      description: No orders have changed status in the last hour
+
+  - alert: ServiceUnavailable
+    expr: up{job="order-service"} == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: order-service
+    annotations:
+      summary: Order Service is down
+      description: Order Service has been down for more than 1 minute
+
+  - alert: HighMemoryUsage
+    expr: (container_memory_usage_bytes{container="order-service"} / container_spec_memory_limit_bytes{container="order-service"}) * 100 > 85
+    for: 5m
+    labels:
+      severity: warning
+      service: order-service
+    annotations:
+      summary: High memory usage in Order Service
+      description: Order Service is using {{ $value }}% of its memory limit
+
+  - alert: HighCPUUsage
+    expr: (rate(container_cpu_usage_seconds_total{container="order-service"}[5m]) * 100) > 80
+    for: 5m
+    labels:
+      severity: warning
+      service: order-service
+    annotations:
+      summary: High CPU usage in Order Service
+      description: Order Service is using {{ $value }}% of CPU
+
+  - alert: DatabaseConnectionErrors
+    expr: rate(order_service_errors_total{error_type="database_connection"}[5m]) > 0
+    for: 1m
+    labels:
+      severity: critical
+      service: order-service
+    annotations:
+      summary: Database connection errors in Order Service
+      description: Order Service is experiencing database connection issues
+
+  - alert: ServiceBusConnectionErrors
+    expr: rate(order_service_errors_total{error_type="servicebus_connection"}[5m]) > 0
+    for: 1m
+    labels:
+      severity: critical
+      service: order-service
+    annotations:
+      summary: Service Bus connection errors in Order Service
+      description: Order Service is experiencing Service Bus connection issues 

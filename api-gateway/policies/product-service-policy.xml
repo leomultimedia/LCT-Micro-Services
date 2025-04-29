@@ -1,0 +1,68 @@
+<policies>
+    <inbound>
+        <base />
+        <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
+            <openid-config url="https://your-tenant.b2clogin.com/your-tenant.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1_signupsignin" />
+            <required-claims>
+                <claim name="aud" match="any">
+                    <value>your-client-id</value>
+                </claim>
+            </required-claims>
+        </validate-jwt>
+        <set-backend-service base-url="http://product-service" />
+        <rate-limit calls="200" renewal-period="60" />
+        <cors>
+            <allowed-origins>
+                <origin>*</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>GET</method>
+                <method>POST</method>
+                <method>PUT</method>
+                <method>DELETE</method>
+                <method>OPTIONS</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+        </cors>
+    </inbound>
+    <backend>
+        <base />
+        <retry condition="@(context.Response.StatusCode >= 500)" count="3" interval="5" max-interval="30" delta="5" first-fast-retry="true">
+            <forward-request timeout="10" />
+        </retry>
+    </backend>
+    <outbound>
+        <base />
+        <set-header name="X-Powered-By" exists-action="delete" />
+        <set-header name="X-AspNet-Version" exists-action="delete" />
+        <set-header name="X-Frame-Options" exists-action="override">
+            <value>DENY</value>
+        </set-header>
+        <set-header name="Strict-Transport-Security" exists-action="override">
+            <value>max-age=31536000; includeSubDomains</value>
+        </set-header>
+        <cache-store duration="60" />
+    </outbound>
+    <on-error>
+        <base />
+        <set-header name="X-Error-Message" exists-action="override">
+            <value>@(context.LastError.Message)</value>
+        </set-header>
+        <return-response>
+            <set-status code="500" reason="Internal Server Error" />
+            <set-header name="Content-Type" exists-action="override">
+                <value>application/json</value>
+            </set-header>
+            <set-body>@{
+                return new JObject(
+                    new JProperty("error", new JObject(
+                        new JProperty("code", "500"),
+                        new JProperty("message", "An internal server error occurred")
+                    ))
+                ).ToString();
+            }</set-body>
+        </return-response>
+    </on-error>
+</policies> 

@@ -1,0 +1,81 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: inventory-service-rules
+  namespace: monitoring
+  labels:
+    app: inventory-service
+    release: prometheus
+spec:
+  groups:
+  - name: inventory-service
+    rules:
+    - alert: HighInventoryErrorRate
+      expr: rate(inventory_service_errors_total[5m]) > 0.1
+      for: 5m
+      labels:
+        severity: critical
+        service: inventory-service
+      annotations:
+        summary: High error rate in Inventory Service
+        description: Inventory Service is experiencing a high error rate of {{ $value }} errors per second
+
+    - alert: LowInventoryLevel
+      expr: inventory_service_stock_level < 10
+      for: 5m
+      labels:
+        severity: warning
+        service: inventory-service
+      annotations:
+        summary: Low inventory level
+        description: Inventory level is below 10 units
+
+    - alert: HighInventoryUpdateRate
+      expr: rate(inventory_service_updates_total[5m]) > 20
+      for: 5m
+      labels:
+        severity: warning
+        service: inventory-service
+      annotations:
+        summary: High inventory update rate
+        description: Inventory Service is updating stock at a rate of {{ $value }} per second
+
+    - alert: InventoryServiceDown
+      expr: up{job="inventory-service"} == 0
+      for: 1m
+      labels:
+        severity: critical
+        service: inventory-service
+      annotations:
+        summary: Inventory Service is down
+        description: Inventory Service has been down for more than 1 minute
+
+    - alert: HighInventoryServiceLatency
+      expr: rate(inventory_service_request_duration_seconds_sum[5m]) / rate(inventory_service_request_duration_seconds_count[5m]) > 1
+      for: 5m
+      labels:
+        severity: warning
+        service: inventory-service
+      annotations:
+        summary: High latency in Inventory Service
+        description: Average request latency is {{ $value }} seconds
+
+    - alert: HighInventoryServiceMemoryUsage
+      expr: (container_memory_usage_bytes{container="inventory-service"} / container_spec_memory_limit_bytes{container="inventory-service"}) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+        service: inventory-service
+      annotations:
+        summary: High memory usage in Inventory Service
+        description: Memory usage is at {{ $value }}% of limit
+
+    - alert: HighInventoryServiceCPUUsage
+      expr: rate(container_cpu_usage_seconds_total{container="inventory-service"}[5m]) * 100 > 80
+      for: 5m
+      labels:
+        severity: warning
+        service: inventory-service
+      annotations:
+        summary: High CPU usage in Inventory Service
+        description: CPU usage is at {{ $value }}% of limit 
