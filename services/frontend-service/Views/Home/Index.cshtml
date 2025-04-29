@@ -1,0 +1,126 @@
+@{
+    ViewData["Title"] = "Home - Lear Cyber Tech E-Commerce";
+}
+
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="display-4">Welcome to Lear Cyber Tech</h1>
+                <p class="lead">Your trusted partner in secure e-commerce solutions</p>
+                <a href="/products" class="btn btn-primary btn-lg">Shop Now</a>
+            </div>
+            <div class="col-md-6">
+                <img src="~/images/hero-image.jpg" alt="E-Commerce Platform" class="img-fluid rounded" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose Us</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center p-4">
+                    <i class="fas fa-shield-alt fa-3x mb-3 text-primary"></i>
+                    <h3>Secure Shopping</h3>
+                    <p>Industry-leading security with PCI DSS, GDPR, and HIPAA compliance</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center p-4">
+                    <i class="fas fa-truck fa-3x mb-3 text-primary"></i>
+                    <h3>Fast Delivery</h3>
+                    <p>Reliable shipping with real-time tracking</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center p-4">
+                    <i class="fas fa-headset fa-3x mb-3 text-primary"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Dedicated customer service team</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="products-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Products</h2>
+        <div class="row" id="featured-products">
+            <!-- Products will be loaded dynamically -->
+        </div>
+    </div>
+</div>
+
+<div class="testimonials-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="~/images/testimonials/user1.jpg" alt="User" class="rounded-circle me-3" width="50" />
+                        <div>
+                            <h5 class="mb-0">John Doe</h5>
+                            <small class="text-muted">Verified Buyer</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"Excellent service and secure payment process. Highly recommended!"</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="~/images/testimonials/user2.jpg" alt="User" class="rounded-circle me-3" width="50" />
+                        <div>
+                            <h5 class="mb-0">Jane Smith</h5>
+                            <small class="text-muted">Verified Buyer</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"Fast delivery and great customer support. Will shop again!"</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="~/images/testimonials/user3.jpg" alt="User" class="rounded-circle me-3" width="50" />
+                        <div>
+                            <h5 class="mb-0">Mike Johnson</h5>
+                            <small class="text-muted">Verified Buyer</small>
+                        </div>
+                    </div>
+                    <p class="mb-0">"Secure platform with excellent product selection. Very satisfied!"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Load featured products
+        $(document).ready(function() {
+            $.get('/api/products/featured', function(products) {
+                const container = $('#featured-products');
+                products.forEach(product => {
+                    container.append(`
+                        <div class="col-md-4 mb-4">
+                            <div class="card product-card">
+                                <img src="${product.imageUrl}" class="card-img-top" alt="${product.name}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">${product.description}</p>
+                                    <p class="card-text"><strong>$${product.price}</strong></p>
+                                    <a href="/products/${product.id}" class="btn btn-primary">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+            });
+        });
+    </script>
+} 

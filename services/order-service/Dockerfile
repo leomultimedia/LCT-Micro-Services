@@ -1,14 +1,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5003
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["OrderService.csproj", "./"]
-RUN dotnet restore "OrderService.csproj"
+COPY ["services/order-service/OrderService.csproj", "services/order-service/"]
+RUN dotnet restore "services/order-service/OrderService.csproj"
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/services/order-service"
 RUN dotnet build "OrderService.csproj" -c Release -o /app/build
 
 FROM build AS publish

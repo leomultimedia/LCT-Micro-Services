@@ -9,8 +9,19 @@ using Microsoft.Extensions.Hosting;
 using ProductService.Data;
 using Prometheus;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add service ports configuration
+builder.Services.AddServicePorts();
+var servicePorts = builder.Services.BuildServiceProvider().GetRequiredService<ServicePorts>();
+
+// Configure Kestrel
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(servicePorts.GetServicePort("Products"));
+});
 
 // Add services to the container
 builder.Services.AddControllers();
@@ -86,5 +97,7 @@ app.UseHttpMetrics();
 app.MapControllers();
 app.MapHealthChecks("/health");
 app.MapHealthChecks("/health/ready");
+
+builder.WebHost.UseUrls("http://*:5011");
 
 app.Run(); 

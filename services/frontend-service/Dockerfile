@@ -1,14 +1,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5019
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["FrontendService.csproj", "./"]
-RUN dotnet restore "FrontendService.csproj"
+COPY ["services/frontend-service/FrontendService.csproj", "services/frontend-service/"]
+RUN dotnet restore "services/frontend-service/FrontendService.csproj"
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/services/frontend-service"
 RUN dotnet build "FrontendService.csproj" -c Release -o /app/build
 
 FROM build AS publish

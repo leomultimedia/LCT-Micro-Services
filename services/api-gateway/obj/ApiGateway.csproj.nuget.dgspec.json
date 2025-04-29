@@ -4,14 +4,14 @@
     "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\ApiGateway.csproj": {}
   },
   "projects": {
-    "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\ApiGateway.csproj": {
+    "E:\\Work\\Personal\\Learn\\MicroServices\\common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\ApiGateway.csproj",
-        "projectName": "ApiGateway",
-        "projectPath": "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\ApiGateway.csproj",
+        "projectUniqueName": "E:\\Work\\Personal\\Learn\\MicroServices\\common\\Common.csproj",
+        "projectName": "Common",
+        "projectPath": "E:\\Work\\Personal\\Learn\\MicroServices\\common\\Common.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\obj\\",
+        "outputPath": "E:\\Work\\Personal\\Learn\\MicroServices\\common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -44,37 +44,101 @@
               "target": "Package",
               "version": "[7.0.14, )"
             },
-            "Microsoft.Extensions.Caching.Memory": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.14, )"
             },
-            "Microsoft.Extensions.Http": {
+            "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[1.25.10, )"
-            },
-            "Microsoft.Identity.Web.UI": {
-              "target": "Package",
-              "version": "[1.25.10, )"
-            },
-            "Ocelot": {
-              "target": "Package",
-              "version": "[21.0.0, )"
-            },
-            "Polly": {
-              "target": "Package",
-              "version": "[7.2.4, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.5.0, )"
+              "version": "[2.15.2, )"
             },
             "prometheus-net.AspNetCore": {
               "target": "Package",
               "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\ApiGateway.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\ApiGateway.csproj",
+        "projectName": "ApiGateway",
+        "projectPath": "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\ApiGateway.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "E:\\Work\\Personal\\Learn\\MicroServices\\services\\api-gateway\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "E:\\Work\\Personal\\Learn\\MicroServices\\common\\Common.csproj": {
+                "projectPath": "E:\\Work\\Personal\\Learn\\MicroServices\\common\\Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.Identity.Web.UI": {
+              "target": "Package",
+              "version": "[2.15.2, )"
+            },
+            "Ocelot": {
+              "target": "Package",
+              "version": "[20.0.0, )"
+            },
+            "Ocelot.Provider.Polly": {
+              "target": "Package",
+              "version": "[20.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [

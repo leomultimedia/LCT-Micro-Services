@@ -102,3 +102,7 @@ E:\Work\Personal\Learn\MicroServices\services\user-service\obj\Debug\net7.0\refi
 E:\Work\Personal\Learn\MicroServices\services\user-service\obj\Debug\net7.0\UserService.pdb
 E:\Work\Personal\Learn\MicroServices\services\user-service\obj\Debug\net7.0\UserService.genruntimeconfig.cache
 E:\Work\Personal\Learn\MicroServices\services\user-service\obj\Debug\net7.0\ref\UserService.dll
+E:\Work\Personal\Learn\MicroServices\services\user-service\bin\Debug\net7.0\Common.dll
+E:\Work\Personal\Learn\MicroServices\services\user-service\bin\Debug\net7.0\Common.pdb
+E:\Work\Personal\Learn\MicroServices\services\user-service\bin\Debug\net7.0\Prometheus.NetStandard.dll
+E:\Work\Personal\Learn\MicroServices\services\user-service\bin\Debug\net7.0\Prometheus.AspNetCore.dll

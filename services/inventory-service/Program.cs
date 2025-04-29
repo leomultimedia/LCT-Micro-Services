@@ -4,8 +4,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Prometheus;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add service ports configuration
+builder.Services.AddServicePorts();
+var servicePorts = builder.Services.BuildServiceProvider().GetRequiredService<ServicePorts>();
+
+// Configure Kestrel
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(servicePorts.GetServicePort("Inventory"));
+});
 
 // Add services to the container.
 builder.Services.AddControllers();

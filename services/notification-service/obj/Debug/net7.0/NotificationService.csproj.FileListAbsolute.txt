@@ -96,6 +96,14 @@ E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net
 E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.Identity.Web.TokenCache.dll
 E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.IdentityModel.LoggingExtensions.dll
 E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.IdentityModel.Validators.dll
-E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Prometheus.Client.dll
-E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Prometheus.Client.Abstractions.dll
-E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Prometheus.Client.AspNetCore.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Common.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Common.pdb
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.AspNetCore.DataProtection.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.Identity.Abstractions.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.Identity.Web.Diagnostics.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\Microsoft.Identity.Web.TokenAcquisition.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\System.Security.Cryptography.Xml.dll
+E:\Work\Personal\Learn\MicroServices\services\notification-service\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

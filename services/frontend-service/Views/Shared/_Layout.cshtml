@@ -3,17 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Lear Cyber Tech</title>
+    <title>@ViewData["Title"] - E-Commerce Platform</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" href="https://www.linkedin.com/company/leartech/" target="_blank" rel="noopener noreferrer">
-                    <img src="~/images/lear-cyber-tech-logo.png" alt="Lear Cyber Tech Logo" height="40" />
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="E-Commerce Logo" height="40" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -21,13 +21,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                            <a class="nav-link text-dark" asp-controller="Products" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                            <a class="nav-link text-dark" asp-controller="Orders" asp-action="Index">Orders</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -35,6 +35,7 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -45,17 +46,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; @DateTime.Now.Year - Lear Cyber Tech. All rights reserved.</p>
-                    <a href="https://www.linkedin.com/company/leartech/" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-linkedin" style="font-size: 1.5rem; vertical-align: middle; margin-right: 6px; color: #0077b5;"></i>
-                        Connect with us on LinkedIn
-                    </a>
+                    &copy; @DateTime.Now.Year - E-Commerce Platform
                 </div>
                 <div class="col-md-6 text-end">
-                    <img src="~/images/nist-logo.png" alt="NIST" height="30" class="me-2" />
-                    <img src="~/images/hipaa-logo.png" alt="HIPAA" height="30" class="me-2" />
-                    <img src="~/images/gdpr-logo.png" alt="GDPR" height="30" class="me-2" />
-                    <img src="~/images/pci-logo.png" alt="PCI DSS" height="30" />
+                    <img src="~/images/pci-dss.png" alt="PCI DSS Compliant" height="30" class="me-2" />
+                    <img src="~/images/iso-27001.png" alt="ISO 27001 Certified" height="30" class="me-2" />
+                    <img src="~/images/gdpr.png" alt="GDPR Compliant" height="30" class="me-2" />
+                    <img src="~/images/soc2.png" alt="SOC 2 Certified" height="30" />
                 </div>
             </div>
         </div>

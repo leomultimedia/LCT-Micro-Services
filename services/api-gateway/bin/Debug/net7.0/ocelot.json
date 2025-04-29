@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "product-service",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5011
         }
       ],
       "UpstreamPathTemplate": "/api/products/{everything}",
@@ -14,6 +14,18 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureAdB2C",
         "AllowedScopes": [ "product.read", "product.write" ]
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5,
+        "TimeoutValue": 5000
       }
     },
     {
@@ -21,8 +33,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "order-service",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5012
         }
       ],
       "UpstreamPathTemplate": "/api/orders/{everything}",
@@ -30,6 +42,18 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureAdB2C",
         "AllowedScopes": [ "order.read", "order.write" ]
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5,
+        "TimeoutValue": 5000
       }
     },
     {
@@ -37,8 +61,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "payment-service",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5013
         }
       ],
       "UpstreamPathTemplate": "/api/payments/{everything}",
@@ -46,6 +70,18 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureAdB2C",
         "AllowedScopes": [ "payment.read", "payment.write" ]
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5,
+        "TimeoutValue": 5000
       }
     },
     {
@@ -53,8 +89,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "notification-service",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5014
         }
       ],
       "UpstreamPathTemplate": "/api/notifications/{everything}",
@@ -62,6 +98,18 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureAdB2C",
         "AllowedScopes": [ "notification.read", "notification.write" ]
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5,
+        "TimeoutValue": 5000
       }
     },
     {
@@ -69,8 +117,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "user-service",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5015
         }
       ],
       "UpstreamPathTemplate": "/api/users/{everything}",
@@ -78,6 +126,18 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureAdB2C",
         "AllowedScopes": [ "user.read", "user.write" ]
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5,
+        "TimeoutValue": 5000
       }
     },
     {
@@ -85,8 +145,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "inventory-service",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5018
         }
       ],
       "UpstreamPathTemplate": "/api/inventory/{everything}",
@@ -94,6 +154,18 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "AzureAdB2C",
         "AllowedScopes": [ "inventory.read", "inventory.write" ]
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 5,
+        "TimeoutValue": 5000
       }
     },
     {
@@ -101,31 +173,25 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "frontend-service",
-          "Port": 80
+          "Host": "localhost",
+          "Port": 5019
         }
       ],
       "UpstreamPathTemplate": "/{everything}",
-      "UpstreamHttpMethod": [ "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AzureAdB2C",
-        "AllowedScopes": []
-      }
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://api-gateway:80",
+    "BaseUrl": "http://localhost:5001",
     "RequestIdKey": "OcRequestId",
     "RateLimitOptions": {
       "ClientIdHeader": "ClientId",
       "QuotaExceededMessage": "Rate limit exceeded",
-      "RateLimitCounterPrefix": "ocelot",
-      "DisableRateLimitHeaders": false,
-      "HttpStatusCode": 429
+      "DisableRateLimitHeaders": false
     },
     "QoSOptions": {
       "ExceptionsAllowedBeforeBreaking": 3,
-      "DurationOfBreak": 5,
+      "DurationOfBreak": 1000,
       "TimeoutValue": 5000
     }
   }

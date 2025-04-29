@@ -1,0 +1,9 @@
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.csproj.AssemblyReference.cache
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.GeneratedMSBuildEditorConfig.editorconfig
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.AssemblyInfoInputs.cache
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.AssemblyInfo.cs
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.csproj.CoreCompileInputs.cache
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.MvcApplicationPartsAssemblyInfo.cs
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.MvcApplicationPartsAssemblyInfo.cache
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.RazorAssemblyInfo.cache
+E:\Work\Personal\Learn\MicroServices\services\sample-data-service\obj\Debug\net7.0\SampleDataService.RazorAssemblyInfo.cs

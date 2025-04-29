@@ -1,14 +1,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5004
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["PaymentService.csproj", "./"]
-RUN dotnet restore "PaymentService.csproj"
+COPY ["services/payment-service/PaymentService.csproj", "services/payment-service/"]
+RUN dotnet restore "services/payment-service/PaymentService.csproj"
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/services/payment-service"
 RUN dotnet build "PaymentService.csproj" -c Release -o /app/build
 
 FROM build AS publish

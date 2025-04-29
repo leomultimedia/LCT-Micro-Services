@@ -1,0 +1,12 @@
+E:\Work\Personal\Learn\MicroServices\common\bin\Debug\net7.0\Common.deps.json
+E:\Work\Personal\Learn\MicroServices\common\bin\Debug\net7.0\Common.dll
+E:\Work\Personal\Learn\MicroServices\common\bin\Debug\net7.0\Common.pdb
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\Common.AssemblyInfoInputs.cache
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\Common.AssemblyInfo.cs
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\Common.csproj.CoreCompileInputs.cache
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\Common.dll
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\refint\Common.dll
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\Common.pdb
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\ref\Common.dll
+E:\Work\Personal\Learn\MicroServices\common\obj\Debug\net7.0\Common.csproj.AssemblyReference.cache

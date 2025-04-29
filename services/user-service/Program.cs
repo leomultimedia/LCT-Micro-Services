@@ -8,8 +8,19 @@ using Microsoft.Extensions.Hosting;
 using UserService.Data;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using UserService.HealthChecks;
+using Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add service ports configuration
+builder.Services.AddServicePorts();
+var servicePorts = builder.Services.BuildServiceProvider().GetRequiredService<ServicePorts>();
+
+// Configure Kestrel
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(servicePorts.GetServicePort("Users"));
+});
 
 // Add services to the container
 builder.Services.AddControllers();

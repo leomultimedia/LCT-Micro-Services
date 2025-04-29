@@ -1,14 +1,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5002
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["ProductService.csproj", "./"]
-RUN dotnet restore "ProductService.csproj"
+COPY ["services/product-service/ProductService.csproj", "services/product-service/"]
+RUN dotnet restore "services/product-service/ProductService.csproj"
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/services/product-service"
 RUN dotnet build "ProductService.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -1,0 +1,66 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DOTNET_VERSION: '7.0.x'
+  AZURE_WEBAPP_NAME: 'ecommerce-microservices'
+  AZURE_WEBAPP_PACKAGE_PATH: './publish'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Publish
+      run: |
+        dotnet publish services/api-gateway/ApiGateway.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dotnet publish services/product-service/ProductService.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dotnet publish services/order-service/OrderService.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dotnet publish services/payment-service/PaymentService.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dotnet publish services/notification-service/NotificationService.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dotnet publish services/user-service/UserService.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dotnet publish services/inventory-service/InventoryService.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        dotnet publish services/frontend-service/FrontendService.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: .net-app
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+        name: .net-app
+        
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} 

@@ -1,14 +1,14 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["ApiGateway.csproj", "./"]
-RUN dotnet restore "ApiGateway.csproj"
+COPY ["services/api-gateway/ApiGateway.csproj", "services/api-gateway/"]
+COPY ["services/api-gateway/ocelot.json", "services/api-gateway/"]
+RUN dotnet restore "services/api-gateway/ApiGateway.csproj"
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/services/api-gateway"
 RUN dotnet build "ApiGateway.csproj" -c Release -o /app/build
 
 FROM build AS publish

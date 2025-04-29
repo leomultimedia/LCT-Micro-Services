@@ -1,14 +1,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5018
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["InventoryService.csproj", "./"]
-RUN dotnet restore "InventoryService.csproj"
+COPY ["services/inventory-service/InventoryService.csproj", "services/inventory-service/"]
+RUN dotnet restore "services/inventory-service/InventoryService.csproj"
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/services/inventory-service"
 RUN dotnet build "InventoryService.csproj" -c Release -o /app/build
 
 FROM build AS publish

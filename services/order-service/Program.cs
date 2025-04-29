@@ -6,8 +6,19 @@ using Prometheus;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Polly;
 using Polly.Extensions.Http;
+using Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add service ports configuration
+builder.Services.AddServicePorts();
+var servicePorts = builder.Services.BuildServiceProvider().GetRequiredService<ServicePorts>();
+
+// Configure Kestrel
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(servicePorts.GetServicePort("Orders"));
+});
 
 // Add services to the container.
 builder.Services.AddControllers();

@@ -3,8 +3,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using Common.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add service ports configuration
+builder.Services.AddServicePorts();
+var servicePorts = builder.Services.BuildServiceProvider().GetRequiredService<ServicePorts>();
+
+// Configure Kestrel
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(servicePorts.GetServicePort("Frontend"));
+});
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
