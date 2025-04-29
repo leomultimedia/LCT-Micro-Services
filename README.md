@@ -43,10 +43,94 @@ This platform is a modern e-commerce solution built using microservices architec
 ## Architecture
 
 ### System Design
-<div align="center">
-  <img src="docs/images/architecture-diagram.png" alt="System Architecture" width="800"/>
-  <p><em>Figure 1: E-Commerce Platform Architecture</em></p>
-</div>
+```mermaid
+graph TB
+    subgraph Client Layer
+        Web[Web Browser]
+        Mobile[Mobile App]
+        API[API Clients]
+    end
+
+    subgraph API Gateway
+        AG[API Gateway]
+        Auth[Authentication]
+        Rate[Rate Limiting]
+        QoS[Quality of Service]
+    end
+
+    subgraph Microservices
+        PS[Product Service]
+        OS[Order Service]
+        PMS[Payment Service]
+        NS[Notification Service]
+        US[User Service]
+        IS[Inventory Service]
+        SDS[Sample Data Service]
+    end
+
+    subgraph Data Layer
+        DB[(SQL Server)]
+        Cache[(Redis Cache)]
+        Queue[(Service Bus)]
+        Storage[(Blob Storage)]
+    end
+
+    subgraph Monitoring
+        Prom[Prometheus]
+        Graf[Grafana]
+        AI[Application Insights]
+    end
+
+    Web --> AG
+    Mobile --> AG
+    API --> AG
+    AG --> Auth
+    AG --> Rate
+    AG --> QoS
+    AG --> PS
+    AG --> OS
+    AG --> PMS
+    AG --> NS
+    AG --> US
+    AG --> IS
+    AG --> SDS
+
+    PS --> DB
+    OS --> DB
+    PMS --> DB
+    NS --> DB
+    US --> DB
+    IS --> DB
+    SDS --> DB
+
+    PS --> Cache
+    OS --> Cache
+    PMS --> Cache
+
+    OS --> Queue
+    PMS --> Queue
+    NS --> Queue
+
+    PS --> Storage
+    OS --> Storage
+
+    PS --> Prom
+    OS --> Prom
+    PMS --> Prom
+    NS --> Prom
+    US --> Prom
+    IS --> Prom
+    SDS --> Prom
+
+    Prom --> Graf
+    PS --> AI
+    OS --> AI
+    PMS --> AI
+    NS --> AI
+    US --> AI
+    IS --> AI
+    SDS --> AI
+```
 
 ### Technology Stack
 - **Backend**: .NET 7.0
@@ -62,6 +146,31 @@ This platform is a modern e-commerce solution built using microservices architec
 ## Services
 
 ### Core Services
+```mermaid
+graph LR
+    subgraph Services
+        AG[API Gateway]
+        PS[Product Service]
+        OS[Order Service]
+        PMS[Payment Service]
+        NS[Notification Service]
+        US[User Service]
+        IS[Inventory Service]
+        SDS[Sample Data Service]
+    end
+
+    subgraph Ports
+        AG --> 5007
+        PS --> 5001
+        OS --> 5003
+        PMS --> 5004
+        NS --> 5006
+        US --> 5002
+        IS --> 5005
+        SDS --> 5000
+    end
+```
+
 1. [Sample Data Service](services/sample-data-service/README.md) (Port: 5000)
    - Initial data seeding
    - Development environment setup

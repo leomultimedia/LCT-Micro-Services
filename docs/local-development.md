@@ -1,9 +1,157 @@
 # Local Development Guide
 
-<div align="center">
-  <img src="../images/local-development-architecture.png" alt="Local Development Architecture" width="800"/>
-  <p><em>Figure 1: Local Development Environment Architecture</em></p>
-</div>
+## Local Development Architecture
+```mermaid
+graph TB
+    subgraph Development Environment
+        subgraph Tools
+            VS[Visual Studio]
+            VSC[VS Code]
+            Git[Git]
+            Docker[Docker]
+            SQL[SQL Server]
+        end
+
+        subgraph Services
+            PS[Product Service]
+            OS[Order Service]
+            PMS[Payment Service]
+            NS[Notification Service]
+        end
+
+        subgraph Data
+            DB[(Local Database)]
+            Cache[(Redis Cache)]
+            Queue[(RabbitMQ)]
+        end
+    end
+
+    VS --> PS
+    VSC --> OS
+    VS --> PMS
+    VSC --> NS
+
+    PS --> DB
+    OS --> DB
+    PMS --> DB
+    NS --> DB
+
+    PS --> Cache
+    OS --> Cache
+    PMS --> Cache
+    NS --> Cache
+
+    OS --> Queue
+    PMS --> Queue
+    NS --> Queue
+```
+
+## Environment Setup Process
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Git as Git
+    participant VS as Visual Studio
+    participant SQL as SQL Server
+    participant Docker as Docker
+
+    Dev->>Git: Clone Repository
+    Git->>Dev: Repository Cloned
+    Dev->>VS: Install Dependencies
+    VS->>Dev: Dependencies Installed
+    Dev->>SQL: Create Database
+    SQL->>Dev: Database Created
+    Dev->>Docker: Start Containers
+    Docker->>Dev: Containers Running
+    Dev->>VS: Run Application
+    VS->>Dev: Application Running
+```
+
+## Development Workflow
+```mermaid
+graph TB
+    subgraph Development
+        subgraph Code
+            Write[Write Code]
+            Test[Run Tests]
+            Build[Build Solution]
+        end
+
+        subgraph Version Control
+            Commit[Commit Changes]
+            Push[Push to Remote]
+            PR[Create PR]
+        end
+
+        subgraph Review
+            Review[Code Review]
+            Approve[Approve PR]
+            Merge[Merge PR]
+        end
+    end
+
+    Write --> Test
+    Test --> Build
+    Build --> Commit
+    Commit --> Push
+    Push --> PR
+    PR --> Review
+    Review --> Approve
+    Approve --> Merge
+```
+
+## Common Development Tasks
+```mermaid
+graph TB
+    subgraph Tasks
+        subgraph Database
+            Migrate[Run Migrations]
+            Seed[Seed Data]
+            Backup[Backup DB]
+        end
+
+        subgraph Code
+            Generate[Generate Code]
+            Format[Format Code]
+            Lint[Run Linter]
+        end
+
+        subgraph Testing
+            Unit[Unit Tests]
+            Int[Integration Tests]
+            E2E[E2E Tests]
+        end
+    end
+
+    Migrate --> Seed
+    Seed --> Backup
+    Generate --> Format
+    Format --> Lint
+    Unit --> Int
+    Int --> E2E
+```
+
+## Troubleshooting Process
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Logs as Logs
+    participant Debug as Debugger
+    participant Test as Tests
+    participant Fix as Fix
+
+    Dev->>Logs: Check Logs
+    Logs->>Dev: Error Found
+    Dev->>Debug: Attach Debugger
+    Debug->>Dev: Breakpoint Hit
+    Dev->>Test: Run Tests
+    Test->>Dev: Test Failed
+    Dev->>Fix: Apply Fix
+    Fix->>Test: Run Tests
+    Test->>Dev: Tests Passed
+    Dev->>Logs: Verify Fix
+    Logs->>Dev: No Errors
+```
 
 ## About This Guide
 This guide is part of the Lear Cyber Tech E-Commerce Microservices Platform documentation. It provides detailed instructions for setting up and working with the local development environment.

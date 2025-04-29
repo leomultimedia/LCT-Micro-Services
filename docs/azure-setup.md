@@ -1,9 +1,264 @@
 # Azure Setup Guide
 
-<div align="center">
-  <img src="../images/azure-architecture.png" alt="Azure Architecture" width="800"/>
-  <p><em>Figure 1: Azure Infrastructure Architecture</em></p>
-</div>
+## Azure Infrastructure Architecture
+```mermaid
+graph TB
+    subgraph Azure Resources
+        subgraph Identity
+            B2C[Azure AD B2C]
+            SP[Service Principal]
+        end
+
+        subgraph Storage
+            SA[Storage Account]
+            Blob[Blob Storage]
+            Queue[Queue Storage]
+        end
+
+        subgraph Messaging
+            SB[Service Bus]
+            Topics[Topics]
+            Queues[Queues]
+        end
+
+        subgraph Security
+            KV[Key Vault]
+            Secrets[Secrets]
+            Keys[Keys]
+        end
+
+        subgraph Monitoring
+            AI[Application Insights]
+            Logs[Log Analytics]
+            Metrics[Metrics]
+        end
+    end
+
+    subgraph Microservices
+        PS[Product Service]
+        OS[Order Service]
+        PMS[Payment Service]
+        NS[Notification Service]
+    end
+
+    PS --> B2C
+    OS --> B2C
+    PMS --> B2C
+    NS --> B2C
+
+    PS --> SA
+    OS --> SA
+    PMS --> SA
+
+    OS --> SB
+    PMS --> SB
+    NS --> SB
+
+    PS --> KV
+    OS --> KV
+    PMS --> KV
+    NS --> KV
+
+    PS --> AI
+    OS --> AI
+    PMS --> AI
+    NS --> AI
+```
+
+## Azure AD B2C Authentication Flow
+```mermaid
+sequenceDiagram
+    participant User
+    participant App as Frontend App
+    participant B2C as Azure AD B2C
+    participant API as API Gateway
+    participant Service as Microservice
+
+    User->>App: Access Application
+    App->>B2C: Redirect to Login
+    B2C->>User: Show Login Page
+    User->>B2C: Enter Credentials
+    B2C->>App: Return ID Token
+    App->>API: Request with Token
+    API->>B2C: Validate Token
+    B2C->>API: Token Valid
+    API->>Service: Forward Request
+    Service->>API: Return Response
+    API->>App: Return Response
+    App->>User: Show Content
+```
+
+## Azure Storage Architecture
+```mermaid
+graph TB
+    subgraph Storage Account
+        subgraph Containers
+            Products[Products Container]
+            Documents[Documents Container]
+            Temp[Temp Container]
+        end
+
+        subgraph Access
+            SAS[Shared Access Signatures]
+            RBAC[Role-Based Access]
+            CORS[CORS Rules]
+        end
+    end
+
+    subgraph Services
+        PS[Product Service]
+        OS[Order Service]
+        PMS[Payment Service]
+    end
+
+    PS --> Products
+    OS --> Documents
+    PMS --> Temp
+
+    PS --> SAS
+    OS --> RBAC
+    PMS --> CORS
+```
+
+## Azure Service Bus Architecture
+```mermaid
+graph TB
+    subgraph Service Bus
+        subgraph Topics
+            Orders[Orders Topic]
+            Payments[Payments Topic]
+            Notifications[Notifications Topic]
+        end
+
+        subgraph Subscriptions
+            OrderSub[Order Subscriptions]
+            PaymentSub[Payment Subscriptions]
+            NotifSub[Notification Subscriptions]
+        end
+    end
+
+    subgraph Services
+        OS[Order Service]
+        PMS[Payment Service]
+        NS[Notification Service]
+    end
+
+    OS --> Orders
+    PMS --> Payments
+    NS --> Notifications
+
+    Orders --> OrderSub
+    Payments --> PaymentSub
+    Notifications --> NotifSub
+```
+
+## Azure Key Vault Architecture
+```mermaid
+graph TB
+    subgraph Key Vault
+        subgraph Secrets
+            DB[Database Connection Strings]
+            API[API Keys]
+            JWT[JWT Keys]
+            SB[Service Bus Keys]
+        end
+
+        subgraph Access
+            Policies[Access Policies]
+            RBAC[Role-Based Access]
+            Audit[Audit Logs]
+        end
+    end
+
+    subgraph Services
+        PS[Product Service]
+        OS[Order Service]
+        PMS[Payment Service]
+        NS[Notification Service]
+    end
+
+    PS --> DB
+    OS --> DB
+    PMS --> DB
+    NS --> DB
+
+    PS --> API
+    OS --> API
+    PMS --> API
+    NS --> API
+
+    PS --> JWT
+    OS --> JWT
+    PMS --> JWT
+    NS --> JWT
+
+    OS --> SB
+    PMS --> SB
+    NS --> SB
+```
+
+## Azure Monitoring Architecture
+```mermaid
+graph TB
+    subgraph Application Insights
+        subgraph Telemetry
+            Traces[Trace Data]
+            Metrics[Performance Metrics]
+            Logs[Application Logs]
+        end
+
+        subgraph Analysis
+            Analytics[Log Analytics]
+            Alerts[Alert Rules]
+            Dashboards[Dashboards]
+        end
+    end
+
+    subgraph Services
+        PS[Product Service]
+        OS[Order Service]
+        PMS[Payment Service]
+        NS[Notification Service]
+    end
+
+    PS --> Traces
+    OS --> Traces
+    PMS --> Traces
+    NS --> Traces
+
+    PS --> Metrics
+    OS --> Metrics
+    PMS --> Metrics
+    NS --> Metrics
+
+    PS --> Logs
+    OS --> Logs
+    PMS --> Logs
+    NS --> Logs
+
+    Traces --> Analytics
+    Metrics --> Analytics
+    Logs --> Analytics
+
+    Analytics --> Alerts
+    Analytics --> Dashboards
+```
+
+## Azure Configuration Flow
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant KV as Key Vault
+    participant App as Application
+    participant Config as Configuration
+
+    Dev->>KV: Store Secrets
+    KV->>Config: Update Configuration
+    Config->>App: Load Configuration
+    App->>KV: Retrieve Secrets
+    KV->>App: Return Secrets
+    App->>Config: Apply Configuration
+```
 
 ## About This Guide
 This guide is part of the Lear Cyber Tech E-Commerce Microservices Platform documentation. It provides detailed instructions for setting up and configuring Azure resources for the platform.
