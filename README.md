@@ -250,8 +250,8 @@ graph LR
 ### Getting Started
 1. **Clone Repository**
    ```powershell
-   git clone https://github.com/your-username/ecommerce-microservices.git
-   cd ecommerce-microservices
+   git clone https://github.com/leomultimedia/LCT-Micro-Services.git
+   cd LCT-Micro-Services
    ```
 
 2. **Configure Environment**
