@@ -1,4 +1,4 @@
-# E-Commerce Microservices Platform
+# Lear Cyber Tech E-Commerce Microservices Platform
 
 ## Author
 **Dr. Libin Pallikunnel Kurian**  
