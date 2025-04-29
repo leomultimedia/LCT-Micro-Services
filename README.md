@@ -1,4 +1,4 @@
-# E-Commerce Microservices Platform
+# Lear Cyber Tech E-Commerce Microservices Platform
 
 A modern, scalable e-commerce platform built using microservices architecture, .NET 7, and Kubernetes.
 
